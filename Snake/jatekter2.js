@@ -7,13 +7,12 @@ let video;
 let classifier;
 let label = 'waiting...'
 
-function preLoad() {
+function preload() {
     classifier = ml5.imageClassifier('https://storage.googleapis.com/tm-model/tl2ZgU8Yi/model.json');
 }
 
-
 function setup() {
-    createCanvas(600, 600);
+    createCanvas(640, 480);
 
     video = createCapture(VIDEO);
     video.hide();
@@ -21,7 +20,7 @@ function setup() {
     classifyVideo();
 
 
-    frameRate(12);
+    frameRate(1);
     textSize(15);
     textStyle(BOLD);
     apple = new Alma();
@@ -37,19 +36,16 @@ function classifyVideo() {
     classifier.classify(video, gotResults);
 }
 
-function gotResults(error, results) {
-    if (error) {
-        console.error(error);
-        return;
-    }
-    label = results[0].label;
-    classifyVideo();
-}
+
+
 
 function draw() {
     background(126, 119, 119);
 
     image(video, 0, 0);
+    textSize(label)
+    fill(255)
+    text(label, 10, 50);
 
     for (let i = snakeHead.farok.length - 1; i >= 0; i--) {
         if (i == 0) {
@@ -101,21 +97,31 @@ function draw() {
     text("Highest: " + int(highest), 10, height - 10);
     snakeHead.show();
     noFill();
-    strokeWeight(2);
+    strokeWeight(1);
     stroke(43, 51, 25);
     rect(1, 1, width - 2, height - 2);
 
 }
 
-function keyPressed() {
+function gotResults(error, results) {
+    if (error) {
+        console.error(error);
+        return;
+    }
+    label = results[0].label;
+    controlSnake();
+    classifyVideo();
+}
+
+function controlSnake() {
     // ugye ha a kigyo nem jobbra megy akkor lehessen balra elmenni stb...
-    if (keyCode == LEFT_ARROW && snakeHead.dir != 'right') {
+    if (label == 'bal' && snakeHead.dir != 'right') {
         snakeHead.dir = 'left';
-    } else if (keyCode == RIGHT_ARROW && snakeHead.dir != 'left') {
+    } else if (label == 'jobb' && snakeHead.dir != 'left') {
         snakeHead.dir = 'right';
-    } else if (keyCode == UP_ARROW && snakeHead.dir != 'down') {
+    } else if (label == 'fel' && snakeHead.dir != 'down') {
         snakeHead.dir = 'up';
-    } else if (keyCode == DOWN_ARROW && snakeHead.dir != 'up') {
+    } else if (label == 'le' && snakeHead.dir != 'up') {
         snakeHead.dir = 'down';
     }
 }
