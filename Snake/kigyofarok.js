@@ -6,7 +6,7 @@ class Farok {
 
 
     show() {
-        fill('black')
+        fill('darkgreen')
         stroke('green')
         rect(this.x, this.y, gap, gap, 4);
     }

@@ -3,10 +3,24 @@ let gap = 15;
 let snakeHead;
 let farokSpawn = {};
 let highest = 0;
+let video;
+let classifier;
+let label = 'waiting...'
+
+function preLoad() {
+    classifier = ml5.imageClassifier('https://storage.googleapis.com/tm-model/tl2ZgU8Yi/model.json');
+}
 
 
 function setup() {
     createCanvas(600, 600);
+
+    video = createCapture(VIDEO);
+    video.hide();
+
+    classifyVideo();
+
+
     frameRate(12);
     textSize(15);
     textStyle(BOLD);
@@ -19,9 +33,23 @@ function setup() {
 
 }
 
+function classifyVideo() {
+    classifier.classify(video, gotResults);
+}
+
+function gotResults(error, results) {
+    if (error) {
+        console.error(error);
+        return;
+    }
+    label = results[0].label;
+    classifyVideo();
+}
+
 function draw() {
     background(126, 119, 119);
-    //
+
+    image(video, 0, 0);
 
     for (let i = snakeHead.farok.length - 1; i >= 0; i--) {
         if (i == 0) {

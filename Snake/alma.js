@@ -17,8 +17,9 @@ class Alma {
 
     //alma megjelenítése
     show() {
+        fill('red')
+        stroke('black')
         rect(this.x, this.y, 15, 15, 4);
-        fill('green')
-        stroke('lightgreen')
+
     }
 }

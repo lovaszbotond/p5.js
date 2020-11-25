@@ -56,5 +56,6 @@ class SnakeHead {
         rect(this.x, this.y, 15, 15, 4);
         fill(23, 31, 10)
         stroke('black')
+
     }
 }
