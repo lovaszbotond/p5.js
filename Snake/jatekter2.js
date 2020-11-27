@@ -8,11 +8,11 @@ let classifier;
 let label = 'waiting...'
 
 function preload() {
-    classifier = ml5.imageClassifier('https://storage.googleapis.com/tm-model/tl2ZgU8Yi/model.json');
+    classifier = ml5.imageClassifier('https://storage.googleapis.com/tm-model/C9tvS7YWN/model.json');
 }
 
 function setup() {
-    createCanvas(640, 480);
+    createCanvas(1000, 1000);
 
     video = createCapture(VIDEO);
     video.hide();
